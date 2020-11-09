@@ -249,7 +249,7 @@ nft_set_conf_content: 'etc/nftables.d/sets.nft.j2'
 # List of input rules to configure for all hosts inherited from this role.
 nft_input_default_rules:
   000 policy:
-    - type filter hook input priority 0; policy drop;
+    - type filter hook input priority filter; policy drop;
   005 global:
     - jump global
   010 drop unwanted:
@@ -306,7 +306,7 @@ nft_input_conf_content: 'etc/nftables.d/filter-input.nft.j2'
 # List of output rules to configure for all hosts inherited from this role.
 nft_output_default_rules:
   000 policy:
-    - type filter hook output priority 0; policy drop;
+    - type filter hook output priority filter; policy drop;
   005 global:
     - jump global
   015 localhost:
@@ -359,7 +359,7 @@ nft_output_conf_content: 'etc/nftables.d/filter-output.nft.j2'
 # List of forward rules to configure for all hosts inherited from this role.
 nft_forward_default_rules:
   000 policy:
-    - type filter hook forward priority 0; policy drop;
+    - type filter hook forward priority filter; policy drop;
   005 global:
     - jump global
                                                                    # ]]]
@@ -418,7 +418,7 @@ nft__nat_table_manage: False
 # List of prerouting rules to configure for all hosts inherited from this role.
 nft__nat_default_prerouting_rules:
   000 policy:
-    - type nat hook prerouting priority 0;
+    - type nat hook prerouting priority filter;
                                                                    # ]]]
 # .. envvar:: nft__nat_prerouting_rules [[[
 #
@@ -459,7 +459,7 @@ nft__nat_prerouting_conf_content: 'etc/nftables.d/nat-prerouting.nft.j2'
 # List of postrouting rules to configure for all hosts inherited from this role.
 nft__nat_default_postrouting_rules:
   000 policy:
-    - type nat hook postrouting priority 100;
+    - type nat hook postrouting priority srcnat;
                                                                    # ]]]
 # .. envvar:: nft__nat_postrouting_rules [[[
 #
