@@ -136,9 +136,6 @@ nft_define_default:
   input tcp accepted:
     name: in_tcp_accept
     value: '{ ssh }'
-  input udp accepted:
-    name: in_udp_accept
-    value: 'none'
   output tcp accepted:
     name: out_tcp_accept
     value: '{ http, https, hkp }'
