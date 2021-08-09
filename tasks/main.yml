@@ -3,6 +3,11 @@
 #
 # tasks file for nftables
 
+- name: Combine group rules from nft_combined_rules__*
+  set_fact:
+    nft_combined_rules: "{{ nft_combined_rules | default({}) | combine(item, recursive=True) }}"
+  loop: "{{ hostvars[inventory_hostname] | select('match', '^nft_combined_rules__[0-9a-z_]*$') | map('extract', hostvars[inventory_hostname]) | list }}"
+
 - name: Check for group files
   become: no
   delegate_to: localhost
