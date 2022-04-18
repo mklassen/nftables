@@ -3,7 +3,7 @@
 
 # (re)Start will be called at first run
 - name: Restart nftables service
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: '{{ nftables__register_systemd_service.changed | default(False) }}'
     state: 'restarted'
     name: '{{ nft_service_name }}'
@@ -12,7 +12,7 @@
 
 # Reload will avoid to loose Nftables rulebase if an invalid syntax is added
 - name: Reload nftables service
-  systemd:
+  ansible.builtin.systemd:
     state: 'reloaded'
     name: '{{ nft_service_name }}'
   when: ansible_service_mgr == 'systemd' and
