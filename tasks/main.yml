@@ -286,3 +286,7 @@
     - not ansible_check_mode
     - ansible_facts.service_mgr == 'systemd'
     - nft_service_manage
+
+- name: Validate ruleset
+  command: "nft -c -f {{ nft_main_conf_path }}"
+  changed_when: false
