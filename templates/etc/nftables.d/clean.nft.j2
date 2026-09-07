@@ -1,0 +1,17 @@
+#jinja2: lstrip_blocks: True, trim_blocks: True
+{{ ansible_managed | comment }}
+{% set globalmerged = nft_global_default_rules.copy() %}
+{% set _ = globalmerged.update(nft_global_rules) %}
+{% set _ = globalmerged.update(nft_global_group_rules) %}
+{% if nft_merged_groups and hostvars[inventory_hostname]['nft_combined_rules'].nft_global_group_rules is defined%}
+  {% set _ = globalmerged.update(hostvars[inventory_hostname]['nft_combined_rules'].nft_global_group_rules) %}
+{% endif %}
+{% set _ = globalmerged.update(nft_global_host_rules) %}
+
+# clean
+destroy table inet filter
+{% if nft__nat_table_manage %}
+destroy table inet nat
+{% endif %}
+
+{{ nft_flush_cmd }}
